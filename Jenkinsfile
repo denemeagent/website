@@ -10,7 +10,7 @@ pipeline{
     stage("Install docker"){
       steps{
         sh '''
-        docker version 
+        sudo docker version 
         '''
       }
     }
