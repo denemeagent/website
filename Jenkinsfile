@@ -10,7 +10,9 @@ pipeline{
     stage("Install docker"){
       steps{
         sh '''
-        sudo dpkg -i ./containerd.io_1.5.11-1_amd64.deb
+        sudo rm -rf ./containerd.io_1.5.11-1_amd64.deb  
+        sudo wget https://download.docker.com/linux/ubuntu/dists/hirsute/pool/stable/amd64/containerd.io_1.4.8-1_amd64.deb
+        sudo dpkg -i ./containerd.io_1.4.8-1_amd64.deb
         sudo dpkg -i ./docker-ce-cli_20.10.14~3-0~ubuntu-hirsute_amd64.deb
         sudo dpkg -i ./docker-ce-rootless-extras_20.10.14~3-0~ubuntu-hirsute_amd64.deb
         sudo dpkg -i ./docker-ce_20.10.14~3-0~ubuntu-hirsute_amd64.deb
