@@ -8,5 +8,12 @@ pipeline{
         sh 'ls'
       }
     }
+    stage("Install docker"){
+      steps{
+        sh '''
+        sudo apt-get update
+        '''
+      }
+    }
   }
 }
