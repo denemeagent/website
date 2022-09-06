@@ -11,10 +11,6 @@ pipeline{
       steps{
         sh '''
         sudo apt-get update
-        sudo apt-get purge docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
-        sudo rm -rf /var/lib/docker
-        sudo rm -rf /var/lib/containerd
-        ls /etc/apt/keyrings
         sudo apt-get remove docker docker-engine docker.io containerd runc -y
         sudo apt-get update
         sudo apt-get install ca-certificates curl gnupg lsb-release -y
