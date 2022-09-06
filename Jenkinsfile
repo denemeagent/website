@@ -11,6 +11,7 @@ pipeline{
       steps{
         sh '''
         uname --all
+        dpkg --print-architecture
         '''
       }
     }
