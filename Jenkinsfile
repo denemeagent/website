@@ -6,7 +6,7 @@ pipeline{
         sh '''
         sudo apt-get update
         sudo apt-get install docker.io -y
-        sudo snap install docker -y
+        sudo snap install docker 
         sudo docker version
         '''
       }
