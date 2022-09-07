@@ -5,8 +5,8 @@ pipeline{
       steps{
         sh '''
         sudo apt-get update
-        sudo apt install docker.io
-        sudo snap install docker
+        sudo apt-get install docker.io -y
+        sudo snap install docker -y
         sudo docker version
         '''
       }
