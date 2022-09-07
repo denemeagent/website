@@ -4,6 +4,7 @@ pipeline{
     stage("Install docker"){
       steps{
         sh '''
+        sudo apt-get update
         sudo apt-get remove docker docker-engine docker.io
         sudo apt-get update
         sudo apt install docker.io
