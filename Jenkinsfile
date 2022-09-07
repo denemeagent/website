@@ -11,5 +11,25 @@ pipeline{
         '''
       }
     }
+    stage("Docker authenticate"){
+      environment {
+        TOKEN= credentials('docker-token')
+      }
+      steps{
+        sh '''
+        sudo docker login --username denemeagent --password "${TOKEN}"
+        '''
+      }
+    }
+    stage("Image build & push to Docker Hub"){
+      steps{
+        sh '''
+        ls
+        sudo docker image build -t denemeagent/deneme .
+        sudo docker image push denemeagent/deneme:latest 
+        sudo docker image ls 
+        '''
+      }
+    }
   }
 }
