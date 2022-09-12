@@ -1,6 +1,3 @@
-node{
-  agent {label 'ubuntu'}
-
+node("ubuntu"){
   sh 'ls'
-  
 }
