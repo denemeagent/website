@@ -1,12 +1,6 @@
-pipeline{
+node{
   agent {label 'ubuntu'}
-  stages {
-    stage("Install docker"){
-      steps{
-        sh '''
-            ls
-        '''
-      }
-    }
-  }
+
+  sh 'ls'
+  
 }
