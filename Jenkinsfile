@@ -1,5 +1,5 @@
 pipeline{
-  agent {label 'ubuntu-2004'}
+  agent {label 'ubuntu'}
   stages {
     stage("Install docker"){
       steps{
