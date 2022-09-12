@@ -1,7 +1,7 @@
 node {
     agent {label 'ubuntu'}
     stage('Preparation') { 
-        checkout scm 
+        sh 'git clone https://github.com/denemeagent/website.git' 
         sh 'ls'
     }
 }
