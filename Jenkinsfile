@@ -1,6 +1,6 @@
 node {
     agent {label 'ubuntu'}
     stage('Preparation') { 
-        ls
+        sh 'ls'
     }
 }
