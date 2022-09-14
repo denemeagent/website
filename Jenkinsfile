@@ -1,5 +1,5 @@
 pipeline{
-  agent {label 'ubuntu'}
+  agent {label 'ubuntu-2004'}
   stages {
     stage("Install docker"){
       steps{
@@ -17,6 +17,7 @@ pipeline{
       }
       steps{
         sh '''
+        cat ~/.docker/config.json
         echo "${TOKEN}" >> secret-text.txt
         cat ./secret-text.txt | sudo docker login --username denemeagent --password-stdin
         '''
@@ -28,8 +29,43 @@ pipeline{
         sudo docker image build -t denemeagent/deneme .
         sudo docker image push denemeagent/deneme:latest 
         sudo docker image ls 
-        sudo docker image rm nginx denemeagent/deneme
-        sudo docker image ls
+        '''
+      }
+    }
+    stage("Install kubectl.."){
+      steps{
+        sh '''
+        curl -LO "https://dl.k8s.io/release/v1.22.11/bin/linux/amd64/kubectl"
+        curl -LO "https://dl.k8s.io/release/v1.22.11/bin/linux/amd64/kubectl.sha256"
+        echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+        sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+        kubectl version --client
+        '''
+      }
+    }
+    stage('Deploy to GKE') {
+      environment {
+          PROJECT_ID = 'jenkins-af'
+          CLUSTER_NAME = 'website'
+          LOCATION = 'europe-west3-b'
+          CREDENTIALS_ID = 'jenkins-af'
+      }
+      steps{
+          step([
+          $class: 'KubernetesEngineBuilder',
+          projectId: env.PROJECT_ID,
+          clusterName: env.CLUSTER_NAME,
+          location: env.LOCATION,
+          manifestPattern: 'deployment.yaml',
+          credentialsId: env.CREDENTIALS_ID,
+          verifyDeployments: true])
+      }
+    }
+    stage('Verify the changes'){
+      steps{
+        sh '''
+        export ip=$(kubectl get ingress -o json | jq ".items[0].status.loadBalancer.ingress[0].ip")
+        echo $ip
         '''
       }
     }
