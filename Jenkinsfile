@@ -47,7 +47,7 @@ pipeline{
           PROJECT_ID = 'jenkins-af'
           CLUSTER_NAME = 'website'
           LOCATION = 'europe-west3-b'
-          CREDENTIALS_ID = credentials('jenkins-af')
+          CREDENTIALS_ID = 'jenkins-af'
       }
       steps{
           step([
@@ -56,7 +56,7 @@ pipeline{
           clusterName: env.CLUSTER_NAME,
           location: env.LOCATION,
           manifestPattern: 'deployment.yaml',
-            credentialsId: "${CREDENTIALS_ID}",
+            credentialsId: env.CREDENTIALS_ID,
           verifyDeployments: true])
       }
     }
