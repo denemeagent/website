@@ -17,7 +17,6 @@ pipeline{
       }
       steps{
         sh '''
-        cat ~/.docker/config.json
         echo "${TOKEN}" >> secret-text.txt
         cat ./secret-text.txt | sudo docker login --username denemeagent --password-stdin
         '''
