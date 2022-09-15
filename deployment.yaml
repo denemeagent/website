@@ -15,7 +15,7 @@ spec:
       containers:
       - name: website
         image: denemeagent/deneme
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         resources:
           limits:
             memory: "800Mi"
