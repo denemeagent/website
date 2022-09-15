@@ -27,8 +27,8 @@ pipeline{
       steps{
         sh '''
         sudo docker image build -t denemeagent/deneme .
-        sudo docker image push denemeagent/deneme:latest 
         sudo docker image ls 
+        sudo docker image push denemeagent/deneme
         '''
       }
     }
