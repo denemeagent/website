@@ -27,6 +27,7 @@ pipeline{
       steps{
         sh '''
         sudo docker image prune -f
+        sudo docker images
         sudo docker image build -t denemeagent/deneme:latest .
         sudo docker images
         sudo docker image push denemeagent/deneme:latest
