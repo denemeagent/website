@@ -65,7 +65,6 @@ pipeline{
     stage('Verify the changes'){
       steps{
         sh '''
-        kubectl get ingress -o json
         export ip=$(kubectl get ingress -o json | jq ".items[0].status.loadBalancer.ingress[0].ip")
         echo $ip
         '''
