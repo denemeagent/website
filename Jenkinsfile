@@ -26,9 +26,10 @@ pipeline{
     stage("Image build & push to Docker Hub"){
       steps{
         sh '''
-        sudo docker image build -t denemeagent/deneme .
+        sudo docker prune images -f
+        sudo docker image build -t denemeagent/deneme:latest .
         sudo docker images
-        sudo docker image push denemeagent/deneme
+        sudo docker image push denemeagent/deneme:latest
         '''
       }
     }
