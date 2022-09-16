@@ -25,13 +25,9 @@ pipeline{
     }
     stage("Image build & push to Docker Hub"){
       steps{
-        sh '''
-        sudo docker image prune -f
-        sudo docker images
-        sudo docker image build -t denemeagent/deneme:latest .
-        sudo docker images
-        sudo docker image push denemeagent/deneme:latest
-        '''
+        sh "sudo docker image prune -f"
+        sh "sudo docker image build -t denemeagent/deneme:v$BUILD_NUMBER ."
+        sh "sudo docker image push denemeagent/deneme:v$BUILD_NUMBER"
       }
     }
     stage("Install kubectl.."){
@@ -55,13 +51,14 @@ pipeline{
       }
       steps{
           step([
-          $class: 'KubernetesEngineBuilder',
-          projectId: env.PROJECT_ID,
-          clusterName: env.CLUSTER_NAME,
-          location: env.LOCATION,
-          manifestPattern: 'deployment.yaml',
+            sh "sed -i 's/deneme:.*/deneme:v$BUILD_NUMBER/' deployment.yaml"
+            $class: 'KubernetesEngineBuilder',
+            projectId: env.PROJECT_ID,
+            clusterName: env.CLUSTER_NAME,
+            location: env.LOCATION,
+            manifestPattern: 'deployment.yaml',
             credentialsId: env.CREDENTIALS_ID,
-          verifyDeployments: true])
+            verifyDeployments: true])
       }
     }
     stage('Verify the changes'){
