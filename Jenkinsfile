@@ -50,8 +50,8 @@ pipeline{
           CREDENTIALS_ID = 'jenkins-af'
       }
       steps{
+          sh "sudo sed -i 's/deneme:.*/deneme:v$BUILD_NUMBER/' deployment.yaml"
           step([
-            sh "sed -i 's/deneme:.*/deneme:v$BUILD_NUMBER/' deployment.yaml"
             $class: 'KubernetesEngineBuilder',
             projectId: env.PROJECT_ID,
             clusterName: env.CLUSTER_NAME,
